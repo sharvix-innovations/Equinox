@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME TOKENS  light (single theme)
+   Values are space-separated RGB channels for /<alpha-value>
+   ============================================================ */
+@layer base {
+  :root {
+    --surface: 255 255 255;       /* #FFFFFF */
+    --surface-2: 240 247 240;     /* mint #F0F7F0 */
+    --ink: 26 42 32;              /* deep green-black */
+    --ink-soft: 110 128 116;      /* muted sage */
+    --line: 224 235 226;          /* hairline mint */
+    color-scheme: light;
+  }
+
+  * {
+    border-color: rgb(var(--line));
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply text-ink font-sans antialiased;
+    background: linear-gradient(165deg, #dcefe0 0%, #c2e6cb 45%, #a9d8b4 100%);
+    background-attachment: fixed;
+    transition: color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#3DA94E, #2E9E43);
+    border-radius: 999px;
+    border: 3px solid rgb(var(--surface));
+  }
+
+  ::selection {
+    background: rgba(61, 169, 78, 0.25);
+  }
+}
+
+/* ============================================================
+   COMPONENT UTILITIES  glass, gradients, text effects
+   ============================================================ */
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl border border-white/15;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    @apply rounded-3xl backdrop-blur-xl border;
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 14px 44px -16px rgba(16, 51, 30, 0.18);
+  }
+
+  /* Floating white page shell on the green gradient backdrop (Bloom-style) */
+  .page-shell {
+    @apply mx-auto w-full max-w-[100rem] overflow-hidden bg-surface;
+    border-radius: 2.25rem;
+    box-shadow: 0 30px 80px -32px rgba(16, 51, 30, 0.4);
+  }
+  @media (min-width: 640px) {
+    .page-shell { border-radius: 2.75rem; }
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #2E9E43 0%, #3DA94E 50%, #6FCF79 100%);
+  }
+
+  .gradient-border {
+    position: relative;
+    background-clip: padding-box;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #3DA94E, #6FCF79, #2E9E43);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.55;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .gradient-border:hover::before { opacity: 1; }
+
+  .section-pad {
+    @apply px-5 sm:px-8 lg:px-12 py-20 lg:py-28;
+  }
+
+  .container-x {
+    @apply mx-auto w-full max-w-[96rem];
+  }
+
+  /* Animated dotted grid backdrop */
+  .bg-dotgrid {
+    background-image: radial-gradient(rgb(var(--line)) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+@layer utilities {
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+  .perspective {
+    perspective: 1200px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

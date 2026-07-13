@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME TOKENS  shared with the marketing site (light theme)
+   Values are space-separated RGB channels for /<alpha-value>.
+   ============================================================ */
+@layer base {
+  :root {
+    --surface: 255 255 255; /* card / panel white */
+    --surface-2: 244 248 244; /* app canvas mint */
+    --ink: 26 42 32; /* deep green-black text */
+    --ink-soft: 110 128 116; /* muted sage text */
+    --line: 224 235 226; /* hairline mint */
+    color-scheme: light;
+  }
+
+  * {
+    border-color: rgb(var(--line));
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface-2 text-ink font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Slim custom scrollbar for dashboard panels */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(61, 169, 78, 0.28);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(61, 169, 78, 0.5); background-clip: padding-box; }
+  ::selection { background: rgba(61, 169, 78, 0.22); }
+}
+
+/* ============================================================
+   COMPONENT UTILITIES
+   ============================================================ */
+@layer components {
+  /* Soft grey backdrop the floating white app card sits on */
+  .app-canvas {
+    background-color: #e8eaec;
+    background-image: radial-gradient(60rem 50rem at 100% 0%, rgba(61, 169, 78, 0.08), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Card surface  clean, thin border, whisper shadow (Donezo-style) */
+  .panel {
+    @apply rounded-2xl border border-line bg-surface;
+    box-shadow: 0 1px 2px rgba(16, 51, 30, 0.03);
+  }
+  .panel-hover {
+    @apply transition-all duration-300;
+  }
+  .panel-hover:hover {
+    box-shadow: 0 2px 4px rgba(16, 51, 30, 0.04), 0 18px 40px -28px rgba(16, 51, 30, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #2e9e43 0%, #3da94e 50%, #6fcf79 100%);
+  }
+
+  /* Sidebar nav item  subtle pill + green accent when active */
+  .nav-item {
+    @apply relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
+      text-ink-soft transition-all duration-200;
+  }
+  .nav-item:hover { @apply bg-brand-gray text-ink; }
+  .nav-item-active,
+  .nav-item-active:hover {
+    @apply bg-brand-gray font-semibold text-ink;
+  }
+
+  /* Focus ring used across inputs & buttons */
+  .focusable {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60 focus-visible:ring-offset-2
+      focus-visible:ring-offset-surface;
+  }
+
+  .bg-dotgrid {
+    background-image: radial-gradient(rgb(var(--line)) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

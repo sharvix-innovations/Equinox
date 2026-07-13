@@ -1,0 +1,25 @@
+{
+  "name": "equinox-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Equinox Environments  monorepo: marketing website (apps/web) + admin dashboard (apps/dashboard).",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:dashboard\"",
+    "dev:web": "npm run dev -w @equinox/web",
+    "dev:dashboard": "npm run dev -w @equinox/dashboard",
+    "build": "npm run build -w @equinox/web && npm run build -w @equinox/dashboard",
+    "build:web": "npm run build -w @equinox/web",
+    "build:dashboard": "npm run build -w @equinox/dashboard",
+    "preview:web": "npm run preview -w @equinox/web",
+    "preview:dashboard": "npm run preview -w @equinox/dashboard",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}

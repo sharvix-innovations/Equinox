@@ -1,0 +1,11 @@
+{
+  "name": "@equinox/config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared build/design config (Tailwind brand preset) for all Equinox apps.",
+  "main": "tailwind.preset.js",
+  "exports": {
+    "./tailwind-preset": "./tailwind.preset.js"
+  }
+}
